@@ -15,27 +15,29 @@ def get_random_text():
 
 def typing_test():
     text = get_random_text()
-    print("Печатайте следующий текст:")
-    print(text)
+    words = text.split()
     
+    print("Печатайте следующий текст по одному слову:")
     input("Нажмите Enter, когда будете готовы начать...")
     
     start_time = time.time()
-    user_input = input("Начинайте печатать: ")
+    correct_words = 0
+    
+    for word in words:
+        print(word)  # Выводим слово на экран
+        user_input = input("Введите слово: ")
+        
+        while user_input.strip() != word:  # Проверяем правильность ввода
+            print("Ошибка! Попробуйте снова.")
+            user_input = input("Введите слово: ")
+        
+        correct_words += 1
+    
     end_time = time.time()
-    
     elapsed_time = end_time - start_time
-    words = text.split()
-    num_words = len(words)
-    user_words = user_input.split()
-    num_user_words = len(user_words)
-    
-    correct_words = sum(1 for expected, actual in zip(words, user_words) if expected == actual)
-    
-    accuracy = (correct_words / num_words) * 100
-    wpm = (num_user_words / elapsed_time) * 60
+    wpm = (correct_words / elapsed_time) * 60
     
     print(f"\nВаша скорость: {wpm:.2f} слов в минуту")
-    print(f"Точность: {accuracy:.2f}%")
+    print("Поздравляем! Тест завершён.")
 
 typing_test()
